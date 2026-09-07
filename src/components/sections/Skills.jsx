@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Boxes, Code2, FileCode, Sparkles, Palette, Server, Database, Cpu, Terminal, Layers, Box, Gauge } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import TechSolarSystem3D from '../3d/TechSolarSystem3D';
-import TechCodePlayground from '../code/TechCodePlayground';
 
 const iconMap = {
   Code2: <Code2 size={20} />,
@@ -23,7 +22,6 @@ export default function Skills({ playClickSound, playHoverSound }) {
   const { data } = useLanguage();
   const { skills } = data;
   const [activeCategory, setActiveCategory] = useState('all');
-  const [leftTab, setLeftTab] = useState('3d'); // '3d' or 'code'
 
   const filteredSkills = activeCategory === 'all'
     ? skills.items
@@ -48,7 +46,7 @@ export default function Skills({ playClickSound, playHoverSound }) {
           </p>
         </div>
 
-        {/* 2 Column Layout: 3D Solar System / Code Playground + Skill Grid */}
+        {/* 2 Column Layout: 3D Solar System + Skill Grid */}
         <div
           style={{
             display: 'grid',
@@ -58,69 +56,9 @@ export default function Skills({ playClickSound, playHoverSound }) {
           }}
           className="skills-layout"
         >
-          {/* Left Column: Interactive 3D Solar System & Code Playground */}
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {/* Mode Switcher */}
-            <div
-              style={{
-                display: 'flex',
-                gap: '8px',
-                background: 'rgba(15, 23, 42, 0.04)',
-                padding: '4px',
-                borderRadius: '14px',
-                border: '1px solid rgba(15, 23, 42, 0.08)',
-                width: 'fit-content'
-              }}
-            >
-              <button
-                onClick={() => setLeftTab('3d')}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '0.45rem 0.9rem',
-                  borderRadius: '10px',
-                  border: 'none',
-                  background: leftTab === '3d' ? 'linear-gradient(135deg, #0284c7 0%, #7c3aed 100%)' : 'transparent',
-                  color: leftTab === '3d' ? '#ffffff' : 'var(--text-secondary)',
-                  fontWeight: leftTab === '3d' ? 700 : 500,
-                  fontSize: '0.8rem',
-                  fontFamily: 'var(--font-tech)',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  boxShadow: leftTab === '3d' ? '0 4px 12px rgba(2, 132, 199, 0.25)' : 'none'
-                }}
-              >
-                <span>🪐 3D Solar System (Orbit)</span>
-              </button>
-              <button
-                onClick={() => setLeftTab('code')}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '0.45rem 0.9rem',
-                  borderRadius: '10px',
-                  border: 'none',
-                  background: leftTab === 'code' ? 'linear-gradient(135deg, #0284c7 0%, #7c3aed 100%)' : 'transparent',
-                  color: leftTab === 'code' ? '#ffffff' : 'var(--text-secondary)',
-                  fontWeight: leftTab === 'code' ? 700 : 500,
-                  fontSize: '0.8rem',
-                  fontFamily: 'var(--font-tech)',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  boxShadow: leftTab === 'code' ? '0 4px 12px rgba(2, 132, 199, 0.25)' : 'none'
-                }}
-              >
-                <span>⚡ Code &amp; Test Suite</span>
-              </button>
-            </div>
-
-            {leftTab === '3d' ? (
-              <TechSolarSystem3D height="460px" showControls={true} />
-            ) : (
-              <TechCodePlayground playClickSound={playClickSound} playHoverSound={playHoverSound} />
-            )}
+          {/* Left Column: 3D Tech Solar System */}
+          <div style={{ width: '100%' }}>
+            <TechSolarSystem3D height="460px" showControls={true} />
           </div>
 
           {/* Right Column: Filter Tabs & Skill Cards */}
