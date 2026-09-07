@@ -1,11 +1,13 @@
-import React from 'react';
-import { Sparkles, ArrowRight, Github, Linkedin, Instagram, Mail, Globe, MessageCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Sparkles, ArrowRight, Github, Linkedin, Instagram, Mail, Globe, MessageCircle, Orbit, Code } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
+import TechSolarSystem3D from '../3d/TechSolarSystem3D';
 import HeroCodeIDE from '../code/HeroCodeIDE';
 
 export default function Hero() {
   const { data } = useLanguage();
   const { personal, hero } = data;
+  const [activeView, setActiveView] = useState('3d'); // '3d' or 'code'
 
   const directWaUrl = `https://wa.me/6285710815159?text=${encodeURIComponent('Halo Helmy Wahyudi, saya ingin berdiskusi mengenai proyek / kolaborasi.')}`;
 
@@ -253,22 +255,88 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Column: Interactive Code IDE Showcase */}
+          {/* Right Column: 3D Tech Solar System (Planets Orbiting Sun) / Interactive IDE */}
           <div
             style={{
               position: 'relative',
               width: '100%',
               minWidth: 0,
-              height: 'clamp(320px, 48vw, 460px)',
+              height: 'clamp(340px, 48vw, 470px)',
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              flexDirection: 'column',
               borderRadius: '24px',
               overflow: 'hidden'
             }}
           >
-            {/* Interactive Code IDE */}
-            <HeroCodeIDE />
+            {/* View Switcher Floating Pills */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                zIndex: 20,
+                display: 'flex',
+                gap: '4px',
+                background: 'rgba(15, 23, 42, 0.85)',
+                backdropFilter: 'blur(12px)',
+                padding: '3px',
+                borderRadius: '12px',
+                border: '1px solid rgba(56, 189, 248, 0.3)',
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.4)'
+              }}
+            >
+              <button
+                onClick={() => setActiveView('3d')}
+                title="3D Solar System Orbit"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '0.35rem 0.65rem',
+                  borderRadius: '9px',
+                  border: 'none',
+                  background: activeView === '3d' ? 'linear-gradient(135deg, #0284c7 0%, #7c3aed 100%)' : 'transparent',
+                  color: activeView === '3d' ? '#ffffff' : '#94a3b8',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  fontFamily: 'var(--font-tech)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <Orbit size={12} />
+                <span>3D Solar System</span>
+              </button>
+              <button
+                onClick={() => setActiveView('code')}
+                title="Interactive Code IDE"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '0.35rem 0.65rem',
+                  borderRadius: '9px',
+                  border: 'none',
+                  background: activeView === 'code' ? 'linear-gradient(135deg, #0284c7 0%, #7c3aed 100%)' : 'transparent',
+                  color: activeView === 'code' ? '#ffffff' : '#94a3b8',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  fontFamily: 'var(--font-tech)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <Code size={12} />
+                <span>Live IDE</span>
+              </button>
+            </div>
+
+            {/* Active Display */}
+            {activeView === '3d' ? (
+              <TechSolarSystem3D height="100%" showControls={false} />
+            ) : (
+              <HeroCodeIDE />
+            )}
           </div>
         </div>
 
