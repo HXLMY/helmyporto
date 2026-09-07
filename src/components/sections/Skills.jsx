@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Boxes, Code2, FileCode, Sparkles, Palette, Server, Database, Cpu, Terminal, Layers, Box, Gauge } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import TechOrbit3D from '../3d/TechOrbit3D';
+import TechCodePlayground from '../code/TechCodePlayground';
 
 const iconMap = {
   Code2: <Code2 size={20} />,
@@ -46,52 +46,19 @@ export default function Skills({ playClickSound, playHoverSound }) {
           </p>
         </div>
 
-        {/* 2 Column Layout: 3D Tech Orbit + Interactive Skill Grid */}
+        {/* 2 Column Layout: Interactive Code Playground + Skill Grid */}
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr',
-            gap: '3rem',
-            alignItems: 'center'
+            gap: '2.5rem',
+            alignItems: 'start'
           }}
           className="skills-layout"
         >
-          {/* Left Column: 3D Orbit Canvas Display */}
-          <div
-            className="glass-panel"
-            style={{
-              padding: '1.5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              position: 'relative'
-            }}
-          >
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '0.5rem 1rem'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span className="pulse-active" />
-                <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>
-                  {skills.orbitTitle}
-                </span>
-              </div>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-code)' }}>
-                {skills.orbitRotate}
-              </span>
-            </div>
-
-            <TechOrbit3D />
-
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-              {skills.orbitDesc}
-            </p>
+          {/* Left Column: Interactive Multi-Language Code Playground */}
+          <div style={{ width: '100%' }}>
+            <TechCodePlayground playClickSound={playClickSound} playHoverSound={playHoverSound} />
           </div>
 
           {/* Right Column: Filter Tabs & Skill Cards */}

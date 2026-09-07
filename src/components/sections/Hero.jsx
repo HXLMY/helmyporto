@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sparkles, ArrowRight, Github, Linkedin, Instagram, Mail, Globe, MessageCircle } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import Hero3DCanvas from '../3d/Hero3DCanvas';
+import HeroCodeIDE from '../code/HeroCodeIDE';
 
 export default function Hero() {
   const { data } = useLanguage();
@@ -253,13 +253,13 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Column: 3D Interactive Centerpiece */}
+          {/* Right Column: Interactive Code IDE Showcase */}
           <div
             style={{
               position: 'relative',
               width: '100%',
               minWidth: 0,
-              height: 'clamp(280px, 46vw, 440px)',
+              height: 'clamp(320px, 48vw, 460px)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -267,23 +267,8 @@ export default function Hero() {
               overflow: 'hidden'
             }}
           >
-            {/* Glass Backdrop Card behind 3D Mesh */}
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'radial-gradient(circle at center, rgba(2, 132, 199, 0.08) 0%, var(--bg-card) 85%)',
-                borderRadius: '24px',
-                border: '1px solid var(--border-subtle)',
-                boxShadow: 'var(--shadow-md)',
-                overflow: 'hidden'
-              }}
-            >
-              <div className="grid-bg-layer" />
-            </div>
-
-            {/* 3D WebGL Canvas */}
-            <Hero3DCanvas />
+            {/* Interactive Code IDE */}
+            <HeroCodeIDE />
           </div>
         </div>
 

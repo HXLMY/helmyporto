@@ -83,13 +83,13 @@ export const portfolioData = {
     },
 
     skills: {
-      sectionTag: "// Kemampuan Teknis & 3D",
-      sectionTitle: "Arsenal Teknologi &",
-      sectionGradient: "Spatial Engineering",
-      sectionDesc: "Kombinasi teknologi mutakhir dari pipeline 3D interaktif, arsitektur frontend skala enterprise, hingga infrastruktur backend.",
-      orbitTitle: "Interactive 3D Constellation",
-      orbitRotate: "Putar 360°",
-      orbitDesc: "Simulasi spasial 3D orbit teknologi yang terintegrasi dalam ekosistem pengembangan saya.",
+      sectionTag: "// Kemampuan Teknis & Pemrograman",
+      sectionTitle: "Arsenal Bahasa &",
+      sectionGradient: "Teknologi Modern",
+      sectionDesc: "Penguasaan komprehensif bahasa pemrograman dari arsitektur backend skala enterprise, ekosistem ERP SAP, hingga frontend performa tinggi.",
+      orbitTitle: "Interactive Code & Tech Playground",
+      orbitRotate: "Unit Test Runner",
+      orbitDesc: "Eksplorasi cuplikan kode produksi, unit test terverifikasi, dan arsitektur backend/frontend yang saya bangun.",
       categories: [
         { id: "all", label: "Semua Tech" },
         { id: "backend", label: "Backend & ERP" },
@@ -552,6 +552,36 @@ export const portfolioData = {
           desc: "Fast UI engineering using Tailwind CSS, Bootstrap, React, Filament, and Vue.js with battle-tested clean code practices.",
           badge: "Clean Architecture"
         }
+      ]
+    },
+
+    skills: {
+      sectionTag: "// Technical & Programming Stack",
+      sectionTitle: "Technology Arsenal &",
+      sectionGradient: "Modern Code Engineering",
+      sectionDesc: "Comprehensive command of programming languages spanning enterprise backend architectures, SAP ERP customization, to high-performance frontend interfaces.",
+      orbitTitle: "Interactive Code & Tech Playground",
+      orbitRotate: "Unit Test Runner",
+      orbitDesc: "Explore verified production code patterns, automated test suites, and clean system architectures.",
+      categories: [
+        { id: "all", label: "All Tech" },
+        { id: "backend", label: "Backend & ERP" },
+        { id: "frontend", label: "Frontend & UI" },
+        { id: "tools", label: "Database & Tools" }
+      ],
+      items: [
+        { name: "Laravel (PHP)", level: 96, category: "backend", icon: "Server", highlight: true },
+        { name: "SAP ABAP & S/4HANA", level: 92, category: "backend", icon: "Cpu", highlight: true },
+        { name: "PHP", level: 95, category: "backend", icon: "FileCode", highlight: true },
+        { name: "Filament & Livewire", level: 93, category: "backend", icon: "Layers", highlight: true },
+        { name: "WRICEF Objects", level: 90, category: "backend", icon: "Boxes", highlight: true },
+        { name: "React.js / Next.js", level: 92, category: "frontend", icon: "Code2", highlight: true },
+        { name: "Vue.js", level: 90, category: "frontend", icon: "Sparkles", highlight: false },
+        { name: "JavaScript / ES6+", level: 94, category: "frontend", icon: "FileCode", highlight: false },
+        { name: "Tailwind CSS & Bootstrap", level: 95, category: "frontend", icon: "Palette", highlight: true },
+        { name: "MySQL & MariaDB", level: 92, category: "tools", icon: "Database", highlight: false },
+        { name: "Git / GitHub", level: 92, category: "tools", icon: "Gauge", highlight: false },
+        { name: "SAP Signavio & SAC", level: 88, category: "backend", icon: "Terminal", highlight: false }
       ]
     },
 
