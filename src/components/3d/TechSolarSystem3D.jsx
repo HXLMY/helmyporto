@@ -1,10 +1,10 @@
 import React, { useRef, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Html, Float, Stars } from '@react-three/drei';
+import { OrbitControls, Html, Stars } from '@react-three/drei';
 import * as THREE from 'three';
-import { Zap, RotateCw, ZoomIn, Info } from 'lucide-react';
+import { Zap, RotateCw, Sparkles, Orbit, Compass, Eye, FastForward } from 'lucide-react';
 
-// Tech Planets Configuration (Orbits, Speeds, Colors, Diameters)
+// Tech Planets Configuration with realistic 3D spatial tilts, moons, and particle trails
 const techPlanets = [
   {
     id: 'laravel',
@@ -12,42 +12,59 @@ const techPlanets = [
     category: 'Backend',
     color: '#ff2d20',
     emissive: '#ff4b3e',
-    orbitRadius: 1.6,
-    speed: 0.85,
-    size: 0.16,
+    orbitRadiusX: 1.8,
+    orbitRadiusZ: 1.7,
+    tilt: 0.12,
+    speed: 0.9,
+    size: 0.18,
     initialAngle: 0,
     hasRing: false,
     level: '96%',
-    desc: 'Enterprise PHP Framework & RESTful APIs'
+    desc: 'Enterprise PHP Framework, Eloquent ORM & RESTful APIs',
+    moons: [
+      { name: 'Filament', color: '#f59e0b', dist: 0.38, speed: 3.2, size: 0.05 },
+      { name: 'Livewire', color: '#ec4899', dist: 0.52, speed: 2.4, size: 0.045 }
+    ]
   },
   {
     id: 'react',
-    name: 'React / Next.js',
+    name: 'React.js',
     category: 'Frontend',
     color: '#00d8ff',
     emissive: '#38bdf8',
-    orbitRadius: 2.3,
-    speed: 0.65,
-    size: 0.19,
-    initialAngle: 1.2,
+    orbitRadiusX: 2.6,
+    orbitRadiusZ: 2.4,
+    tilt: -0.15,
+    speed: 0.72,
+    size: 0.21,
+    initialAngle: 1.3,
     hasRing: true,
-    ringColor: 'rgba(0, 216, 255, 0.4)',
+    ringColor: 'rgba(0, 216, 255, 0.45)',
     level: '94%',
-    desc: 'Interactive UI, SSR & Next.js Architecture'
+    desc: 'Component Driven UI, Concurrent Transitions & State Logic',
+    moons: [
+      { name: 'Next.js', color: '#ffffff', dist: 0.42, speed: 2.8, size: 0.055 },
+      { name: 'Zustand', color: '#a855f7', dist: 0.58, speed: 1.9, size: 0.04 }
+    ]
   },
   {
     id: 'php',
-    name: 'PHP',
+    name: 'PHP 8.3',
     category: 'Language',
     color: '#8892bf',
     emissive: '#a5b4fc',
-    orbitRadius: 2.9,
-    speed: 0.5,
-    size: 0.15,
-    initialAngle: 2.4,
+    orbitRadiusX: 3.3,
+    orbitRadiusZ: 3.1,
+    tilt: 0.08,
+    speed: 0.56,
+    size: 0.16,
+    initialAngle: 2.5,
     hasRing: false,
     level: '95%',
-    desc: 'Modern PHP 8.3 & Object-Oriented Architecture'
+    desc: 'Strict Types, Attributes, Fibers & Clean Architecture',
+    moons: [
+      { name: 'Composer', color: '#d97706', dist: 0.36, speed: 2.5, size: 0.04 }
+    ]
   },
   {
     id: 'vue',
@@ -55,13 +72,18 @@ const techPlanets = [
     category: 'Frontend',
     color: '#42b883',
     emissive: '#34d399',
-    orbitRadius: 3.5,
-    speed: 0.42,
-    size: 0.17,
-    initialAngle: 3.6,
+    orbitRadiusX: 4.0,
+    orbitRadiusZ: 3.8,
+    tilt: -0.1,
+    speed: 0.45,
+    size: 0.18,
+    initialAngle: 3.8,
     hasRing: false,
     level: '90%',
-    desc: 'Reactive Component Architecture & SPA'
+    desc: 'Reactive Single File Components, Pinia & Vue Router',
+    moons: [
+      { name: 'Vite', color: '#a855f7', dist: 0.38, speed: 3.0, size: 0.045 }
+    ]
   },
   {
     id: 'abap',
@@ -69,28 +91,39 @@ const techPlanets = [
     category: 'ERP S/4HANA',
     color: '#f59e0b',
     emissive: '#fbbf24',
-    orbitRadius: 4.1,
-    speed: 0.35,
-    size: 0.22,
-    initialAngle: 4.8,
+    orbitRadiusX: 4.8,
+    orbitRadiusZ: 4.5,
+    tilt: 0.18,
+    speed: 0.36,
+    size: 0.25,
+    initialAngle: 4.9,
     hasRing: true,
     ringColor: 'rgba(245, 158, 11, 0.5)',
     level: '92%',
-    desc: 'WRICEF, S/4HANA Customization & BAdI'
+    desc: 'WRICEF S/4HANA, BAdI Enhancements, Smartforms & ALV',
+    moons: [
+      { name: 'S/4HANA', color: '#38bdf8', dist: 0.48, speed: 2.2, size: 0.06 },
+      { name: 'SAC', color: '#10b981', dist: 0.65, speed: 1.6, size: 0.045 }
+    ]
   },
   {
     id: 'mysql',
-    name: 'MySQL / DB',
+    name: 'MySQL / MariaDB',
     category: 'Database',
     color: '#00758f',
     emissive: '#0284c7',
-    orbitRadius: 4.7,
+    orbitRadiusX: 5.6,
+    orbitRadiusZ: 5.3,
+    tilt: -0.14,
     speed: 0.28,
-    size: 0.16,
-    initialAngle: 0.8,
+    size: 0.18,
+    initialAngle: 0.9,
     hasRing: false,
     level: '92%',
-    desc: 'ACID Transactions, Indexing & Normalization'
+    desc: 'Composite Indexing, Query Optimization & Data Integrity',
+    moons: [
+      { name: 'Redis', color: '#ef4444', dist: 0.38, speed: 2.7, size: 0.045 }
+    ]
   },
   {
     id: 'js',
@@ -98,13 +131,16 @@ const techPlanets = [
     category: 'Core Language',
     color: '#f7df1e',
     emissive: '#fde047',
-    orbitRadius: 5.3,
+    orbitRadiusX: 6.3,
+    orbitRadiusZ: 6.0,
+    tilt: 0.09,
     speed: 0.22,
-    size: 0.18,
-    initialAngle: 2.0,
+    size: 0.2,
+    initialAngle: 2.1,
     hasRing: false,
     level: '94%',
-    desc: 'TypeScript, ES6+ & Asynchronous Systems'
+    desc: 'TypeScript Strict Mode, Async/Await & Event Loop',
+    moons: []
   },
   {
     id: 'tailwind',
@@ -112,87 +148,118 @@ const techPlanets = [
     category: 'UI Engine',
     color: '#38bdf8',
     emissive: '#7dd3fc',
-    orbitRadius: 5.9,
-    speed: 0.18,
-    size: 0.15,
-    initialAngle: 5.5,
+    orbitRadiusX: 7.0,
+    orbitRadiusZ: 6.7,
+    tilt: -0.12,
+    speed: 0.17,
+    size: 0.16,
+    initialAngle: 5.6,
     hasRing: false,
     level: '95%',
-    desc: 'Rapid Utility-First Styling & Design Systems'
+    desc: 'Responsive Utility Engine, JIT Compiler & Design Tokens',
+    moons: []
   }
 ];
 
-// Central Glowing Sun (Core Engine)
-function SunCore({ isPaused }) {
+// Glowing Solar Flares & Pulsing Plasma Sun Core
+function SunCore({ speedMultiplier, isPaused }) {
   const sunMeshRef = useRef();
   const coronaRef = useRef();
   const outerGlowRef = useRef();
+  const flaresGroupRef = useRef();
+
+  // Floating solar flare particles
+  const flareParticles = useMemo(() => {
+    const pts = [];
+    for (let i = 0; i < 36; i++) {
+      const theta = (i / 36) * Math.PI * 2;
+      const r = 0.75 + Math.random() * 0.25;
+      pts.push({
+        pos: [Math.cos(theta) * r, (Math.random() - 0.5) * 0.3, Math.sin(theta) * r],
+        scale: 0.03 + Math.random() * 0.04,
+        speed: 1 + Math.random() * 2
+      });
+    }
+    return pts;
+  }, []);
 
   useFrame((state, delta) => {
-    if (!isPaused && sunMeshRef.current) {
-      sunMeshRef.current.rotation.y += delta * 0.4;
-      if (coronaRef.current) coronaRef.current.rotation.z -= delta * 0.25;
+    if (!isPaused) {
+      const step = delta * speedMultiplier;
+      if (sunMeshRef.current) sunMeshRef.current.rotation.y += step * 0.5;
+      if (coronaRef.current) coronaRef.current.rotation.z -= step * 0.35;
+      if (flaresGroupRef.current) flaresGroupRef.current.rotation.y += step * 0.2;
       if (outerGlowRef.current) {
-        const scale = 1 + Math.sin(state.clock.elapsedTime * 2) * 0.04;
-        outerGlowRef.current.scale.set(scale, scale, scale);
+        const pulse = 1 + Math.sin(state.clock.elapsedTime * 3) * 0.06;
+        outerGlowRef.current.scale.set(pulse, pulse, pulse);
       }
     }
   });
 
   return (
     <group>
-      {/* Intense Point Light from Sun */}
-      <pointLight color="#f59e0b" intensity={3.5} distance={20} decay={1.5} />
-      <pointLight color="#fbbf24" intensity={2.0} distance={8} />
+      {/* High-intensity Sun Lights */}
+      <pointLight color="#f59e0b" intensity={4.5} distance={30} decay={1.3} />
+      <pointLight color="#fbbf24" intensity={2.5} distance={12} />
 
-      {/* Outer Atmospheric Pulse Halo */}
-      <mesh ref={outerGlowRef} scale={1.2}>
-        <sphereGeometry args={[0.7, 32, 32]} />
+      {/* Volumetric Outer Pulse Halo */}
+      <mesh ref={outerGlowRef} scale={1.25}>
+        <sphereGeometry args={[0.75, 32, 32]} />
         <meshBasicMaterial
           color="#f59e0b"
           transparent
-          opacity={0.18}
+          opacity={0.2}
           side={THREE.BackSide}
         />
       </mesh>
 
-      {/* Corona Ray Ring */}
-      <mesh ref={coronaRef} rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.72, 0.95, 48]} />
+      {/* Dynamic Corona Ring */}
+      <mesh ref={coronaRef} rotation={[Math.PI / 2.3, 0, 0]}>
+        <ringGeometry args={[0.78, 1.15, 64]} />
         <meshBasicMaterial
           color="#fbbf24"
           transparent
-          opacity={0.35}
+          opacity={0.4}
           side={THREE.DoubleSide}
         />
       </mesh>
 
-      {/* Main Glowing Sun Sphere */}
+      {/* Central Molten Star Sphere */}
       <mesh ref={sunMeshRef}>
-        <sphereGeometry args={[0.62, 32, 32]} />
+        <sphereGeometry args={[0.68, 36, 36]} />
         <meshStandardMaterial
           color="#ffb703"
           emissive="#fb8500"
-          emissiveIntensity={2.2}
-          roughness={0.2}
-          metalness={0.8}
+          emissiveIntensity={2.5}
+          roughness={0.15}
+          metalness={0.85}
         />
       </mesh>
 
-      {/* Central Sun Label */}
-      <Html distanceFactor={11} center position={[0, -0.9, 0]}>
+      {/* Solar Flare Particle Prominences */}
+      <group ref={flaresGroupRef}>
+        {flareParticles.map((fp, i) => (
+          <mesh key={i} position={fp.pos} scale={fp.scale}>
+            <sphereGeometry args={[1, 8, 8]} />
+            <meshBasicMaterial color="#fde047" transparent opacity={0.7} />
+          </mesh>
+        ))}
+      </group>
+
+      {/* Sun Core Floating Badge */}
+      <Html distanceFactor={12} center position={[0, -1.05, 0]}>
         <div
           style={{
-            background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.9) 0%, rgba(217, 119, 6, 0.95) 100%)',
+            background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.95) 0%, rgba(217, 119, 6, 0.98) 100%)',
             color: '#ffffff',
-            padding: '3px 9px',
+            padding: '3px 10px',
             borderRadius: '12px',
-            fontSize: '10px',
+            fontSize: '10.5px',
             fontWeight: 800,
             fontFamily: 'var(--font-tech)',
             letterSpacing: '0.06em',
             textTransform: 'uppercase',
-            boxShadow: '0 0 18px rgba(245, 158, 11, 0.6)',
+            boxShadow: '0 0 20px rgba(245, 158, 11, 0.7)',
             border: '1px solid rgba(255, 255, 255, 0.4)',
             whiteSpace: 'nowrap',
             pointerEvents: 'none',
@@ -206,57 +273,120 @@ function SunCore({ isPaused }) {
   );
 }
 
-// Planetary Orbit Track Line
-function OrbitRing({ radius }) {
-  const points = useMemo(() => {
+// Glowing 3D Orbit Track with Inclination
+function OrbitPath({ radiusX, radiusZ, tilt }) {
+  const lineGeometry = useMemo(() => {
     const pts = [];
-    const segments = 96;
+    const segments = 120;
     for (let i = 0; i <= segments; i++) {
       const theta = (i / segments) * Math.PI * 2;
-      pts.push(new THREE.Vector3(Math.cos(theta) * radius, 0, Math.sin(theta) * radius));
+      const x = Math.cos(theta) * radiusX;
+      const z = Math.sin(theta) * radiusZ;
+      const y = Math.sin(theta) * tilt;
+      pts.push(new THREE.Vector3(x, y, z));
     }
-    return pts;
-  }, [radius]);
-
-  const lineGeometry = useMemo(() => {
-    return new THREE.BufferGeometry().setFromPoints(points);
-  }, [points]);
+    return new THREE.BufferGeometry().setFromPoints(pts);
+  }, [radiusX, radiusZ, tilt]);
 
   return (
     <line geometry={lineGeometry}>
-      <lineBasicMaterial color="#38bdf8" transparent opacity={0.22} />
+      <lineBasicMaterial color="#38bdf8" transparent opacity={0.24} />
     </line>
   );
 }
 
-// Individual Tech Planet Revolving Around Sun
-function OrbitingPlanet({ planet, isPaused, activePlanetId, onSelectPlanet }) {
+// Orbiting Asteroid Belt (Cosmic Ring Dust between inner & outer orbits)
+function AsteroidBelt({ speedMultiplier, isPaused }) {
+  const beltRef = useRef();
+
+  const asteroids = useMemo(() => {
+    const pts = [];
+    const count = 90;
+    for (let i = 0; i < count; i++) {
+      const angle = (i / count) * Math.PI * 2 + Math.random() * 0.1;
+      const dist = 4.3 + (Math.random() - 0.5) * 0.5;
+      const y = (Math.random() - 0.5) * 0.25;
+      pts.push({
+        x: Math.cos(angle) * dist,
+        y: y,
+        z: Math.sin(angle) * dist,
+        scale: 0.02 + Math.random() * 0.035,
+        color: Math.random() > 0.5 ? '#94a3b8' : '#38bdf8'
+      });
+    }
+    return pts;
+  }, []);
+
+  useFrame((_, delta) => {
+    if (!isPaused && beltRef.current) {
+      beltRef.current.rotation.y += delta * 0.08 * speedMultiplier;
+    }
+  });
+
+  return (
+    <group ref={beltRef}>
+      {asteroids.map((ast, idx) => (
+        <mesh key={idx} position={[ast.x, ast.y, ast.z]} scale={ast.scale}>
+          <dodecahedronGeometry args={[1, 0]} />
+          <meshStandardMaterial color={ast.color} roughness={0.8} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+// Individual Tech Planet with Moons and Trailing Particles
+function OrbitingTechPlanet({ planet, isPaused, speedMultiplier, activePlanetId, onSelectPlanet }) {
   const planetGroupRef = useRef();
   const sphereRef = useRef();
+  const moonsGroupRef = useRef();
+  const trailGroupRef = useRef();
   const [isHovered, setIsHovered] = useState(false);
 
+  // Pre-generate comet particle tail behind planet
+  const tailSegments = useMemo(() => {
+    return Array.from({ length: 5 }, (_, i) => ({
+      offset: (i + 1) * 0.08,
+      scale: 0.04 - i * 0.006,
+      opacity: 0.5 - i * 0.09
+    }));
+  }, []);
+
   useFrame((state) => {
+    const time = state.clock.elapsedTime * (planet.speed * speedMultiplier) + planet.initialAngle;
+    const x = Math.cos(time) * planet.orbitRadiusX;
+    const z = Math.sin(time) * planet.orbitRadiusZ;
+    const y = Math.sin(time) * planet.tilt;
+
     if (!isPaused && planetGroupRef.current) {
-      const time = state.clock.elapsedTime * planet.speed + planet.initialAngle;
-      const x = Math.cos(time) * planet.orbitRadius;
-      const z = Math.sin(time) * planet.orbitRadius;
-      // Slight vertical wave for dynamic 3D depth
-      const y = Math.sin(time * 1.5) * 0.15;
       planetGroupRef.current.position.set(x, y, z);
     }
     if (sphereRef.current) {
-      sphereRef.current.rotation.y += 0.02;
+      sphereRef.current.rotation.y += 0.025 * speedMultiplier;
+    }
+    if (!isPaused && moonsGroupRef.current) {
+      moonsGroupRef.current.rotation.y += 0.04 * speedMultiplier;
     }
   });
 
   const isSelected = activePlanetId === planet.id;
 
   return (
-    <group ref={planetGroupRef} position={[planet.orbitRadius, 0, 0]}>
-      {/* Planet Sphere */}
+    <group ref={planetGroupRef} position={[planet.orbitRadiusX, 0, 0]}>
+      {/* Dynamic Trailing Particles (Planetary Comet Wake) */}
+      <group ref={trailGroupRef}>
+        {tailSegments.map((t, idx) => (
+          <mesh key={idx} position={[-Math.sin(planet.initialAngle) * t.offset * 1.5, 0, -Math.cos(planet.initialAngle) * t.offset * 1.5]} scale={t.scale}>
+            <sphereGeometry args={[1, 8, 8]} />
+            <meshBasicMaterial color={planet.color} transparent opacity={t.opacity} />
+          </mesh>
+        ))}
+      </group>
+
+      {/* Main Planet Sphere */}
       <mesh
         ref={sphereRef}
-        scale={isHovered || isSelected ? 1.35 : 1}
+        scale={isHovered || isSelected ? 1.4 : 1}
         onPointerOver={(e) => {
           e.stopPropagation();
           setIsHovered(true);
@@ -268,31 +398,82 @@ function OrbitingPlanet({ planet, isPaused, activePlanetId, onSelectPlanet }) {
         }}
         style={{ cursor: 'pointer' }}
       >
-        <sphereGeometry args={[planet.size, 24, 24]} />
+        <sphereGeometry args={[planet.size, 28, 28]} />
         <meshStandardMaterial
           color={planet.color}
           emissive={planet.emissive}
-          emissiveIntensity={isHovered || isSelected ? 1.6 : 0.9}
-          roughness={0.3}
-          metalness={0.6}
+          emissiveIntensity={isHovered || isSelected ? 1.8 : 0.95}
+          roughness={0.25}
+          metalness={0.7}
         />
       </mesh>
 
-      {/* Optional Saturn-like Planetary Ring */}
+      {/* Planet Atmosphere Glow Halo */}
+      {(isHovered || isSelected) && (
+        <mesh scale={1.7}>
+          <sphereGeometry args={[planet.size, 20, 20]} />
+          <meshBasicMaterial color={planet.color} transparent opacity={0.25} side={THREE.BackSide} />
+        </mesh>
+      )}
+
+      {/* Saturn-like Ring */}
       {planet.hasRing && (
         <mesh rotation={[Math.PI / 3, 0, 0]}>
-          <ringGeometry args={[planet.size * 1.4, planet.size * 1.9, 32]} />
+          <ringGeometry args={[planet.size * 1.45, planet.size * 2.1, 36]} />
           <meshBasicMaterial
             color={planet.color}
             transparent
-            opacity={0.45}
+            opacity={0.55}
             side={THREE.DoubleSide}
           />
         </mesh>
       )}
 
+      {/* Orbiting Tech Moons (Satellites like Filament/Livewire/Next.js) */}
+      {planet.moons && planet.moons.length > 0 && (
+        <group ref={moonsGroupRef}>
+          {planet.moons.map((moon, mIdx) => {
+            const moonAngle = mIdx * (Math.PI / 1.5);
+            const mx = Math.cos(moonAngle) * moon.dist;
+            const mz = Math.sin(moonAngle) * moon.dist;
+            return (
+              <group key={mIdx} position={[mx, 0, mz]}>
+                <mesh scale={moon.size}>
+                  <sphereGeometry args={[1, 14, 14]} />
+                  <meshStandardMaterial
+                    color={moon.color}
+                    emissive={moon.color}
+                    emissiveIntensity={1.2}
+                  />
+                </mesh>
+                {/* Moon label on hover */}
+                {(isHovered || isSelected) && (
+                  <Html distanceFactor={8} center position={[0, moon.size + 0.12, 0]}>
+                    <span
+                      style={{
+                        background: 'rgba(15, 23, 42, 0.9)',
+                        color: '#f8fafc',
+                        padding: '1px 4px',
+                        borderRadius: '4px',
+                        fontSize: '8px',
+                        fontWeight: 700,
+                        fontFamily: 'var(--font-tech)',
+                        whiteSpace: 'nowrap',
+                        border: `1px solid ${moon.color}`
+                      }}
+                    >
+                      {moon.name}
+                    </span>
+                  </Html>
+                )}
+              </group>
+            );
+          })}
+        </group>
+      )}
+
       {/* Floating HTML Badge pinned above Planet */}
-      <Html distanceFactor={10} center position={[0, planet.size + 0.32, 0]}>
+      <Html distanceFactor={11} center position={[0, planet.size + 0.36, 0]}>
         <div
           onClick={(e) => {
             e.stopPropagation();
@@ -302,24 +483,24 @@ function OrbitingPlanet({ planet, isPaused, activePlanetId, onSelectPlanet }) {
           onMouseLeave={() => setIsHovered(false)}
           style={{
             background: isSelected
-              ? 'rgba(15, 23, 42, 0.95)'
+              ? 'rgba(15, 23, 42, 0.96)'
               : isHovered
-              ? 'rgba(15, 23, 42, 0.92)'
-              : 'rgba(255, 255, 255, 0.92)',
+              ? 'rgba(15, 23, 42, 0.94)'
+              : 'rgba(255, 255, 255, 0.93)',
             backdropFilter: 'blur(10px)',
             border: `1.5px solid ${planet.color}`,
             color: isSelected || isHovered ? '#ffffff' : '#0f172a',
             padding: '3px 8px',
             borderRadius: '9px',
             fontSize: '11px',
-            fontWeight: 700,
+            fontWeight: 800,
             fontFamily: 'var(--font-tech)',
-            boxShadow: `0 4px 14px rgba(0, 0, 0, 0.2), 0 0 12px ${planet.color}66`,
+            boxShadow: `0 4px 14px rgba(0, 0, 0, 0.25), 0 0 14px ${planet.color}88`,
             whiteSpace: 'nowrap',
             cursor: 'pointer',
             userSelect: 'none',
             transition: 'all 0.2s ease',
-            transform: isHovered || isSelected ? 'scale(1.1)' : 'scale(1)',
+            transform: isHovered || isSelected ? 'scale(1.15)' : 'scale(1)',
             display: 'flex',
             alignItems: 'center',
             gap: '5px'
@@ -346,42 +527,56 @@ function OrbitingPlanet({ planet, isPaused, activePlanetId, onSelectPlanet }) {
   );
 }
 
-// Solar System Scene Root
-function SolarSystemScene({ isPaused, activePlanetId, onSelectPlanet }) {
-  const sceneRef = useRef();
+// 3D Solar System Scene Container
+function SolarSystemCosmos({ speedMultiplier, isPaused, activePlanetId, onSelectPlanet }) {
+  const cosmosRef = useRef();
 
   useFrame((_, delta) => {
-    if (!isPaused && sceneRef.current) {
-      // Gentle overall cosmos axial rotation
-      sceneRef.current.rotation.y += delta * 0.04;
+    if (!isPaused && cosmosRef.current) {
+      cosmosRef.current.rotation.y += delta * 0.02 * speedMultiplier;
     }
   });
 
   return (
-    <group ref={sceneRef} rotation={[0.45, 0, 0]}>
-      {/* Central Sun */}
-      <SunCore isPaused={isPaused} />
+    <group ref={cosmosRef} rotation={[0.42, 0, 0]}>
+      {/* Central Glowing Sun */}
+      <SunCore speedMultiplier={speedMultiplier} isPaused={isPaused} />
 
-      {/* Orbital Tracks & Revolving Tech Planets */}
+      {/* Orbit Tracks & Revolving Planets */}
       {techPlanets.map((planet) => (
         <React.Fragment key={planet.id}>
-          <OrbitRing radius={planet.orbitRadius} />
-          <OrbitingPlanet
+          <OrbitPath
+            radiusX={planet.orbitRadiusX}
+            radiusZ={planet.orbitRadiusZ}
+            tilt={planet.tilt}
+          />
+          <OrbitingTechPlanet
             planet={planet}
             isPaused={isPaused}
+            speedMultiplier={speedMultiplier}
             activePlanetId={activePlanetId}
             onSelectPlanet={onSelectPlanet}
           />
         </React.Fragment>
       ))}
+
+      {/* Orbiting Asteroid Belt */}
+      <AsteroidBelt speedMultiplier={speedMultiplier} isPaused={isPaused} />
     </group>
   );
 }
 
-// Exportable Main Component
+// Exportable Enhanced Component
 export default function TechSolarSystem3D({ height = '460px', showControls = true }) {
   const [isPaused, setIsPaused] = useState(false);
+  const [speedMultiplier, setSpeedMultiplier] = useState(1); // 1x, 2x, 4x
   const [activePlanet, setActivePlanet] = useState(null);
+
+  const cycleSpeed = () => {
+    if (speedMultiplier === 1) setSpeedMultiplier(2);
+    else if (speedMultiplier === 2) setSpeedMultiplier(3.5);
+    else setSpeedMultiplier(1);
+  };
 
   return (
     <div
@@ -392,51 +587,52 @@ export default function TechSolarSystem3D({ height = '460px', showControls = tru
         borderRadius: '24px',
         overflow: 'hidden',
         background: 'radial-gradient(ellipse at center, rgba(13, 22, 45, 0.98) 0%, rgba(5, 8, 18, 0.98) 100%)',
-        border: '1px solid rgba(56, 189, 248, 0.25)',
-        boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(2, 132, 199, 0.15)'
+        border: '1px solid rgba(56, 189, 248, 0.28)',
+        boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 50px rgba(2, 132, 199, 0.18)'
       }}
     >
       {/* 3D WebGL Canvas */}
       <Canvas
-        camera={{ position: [0, 7.5, 7.2], fov: 48 }}
+        camera={{ position: [0, 8.2, 7.8], fov: 48 }}
         gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
       >
-        <color attach="background" args={['#060a14']} />
-        
+        <color attach="background" args={['#050814']} />
+
         {/* Ambient Lights */}
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[10, 15, 10]} intensity={1.2} />
+        <ambientLight intensity={0.85} />
+        <directionalLight position={[10, 18, 10]} intensity={1.3} />
 
-        {/* Deep Cosmic Stars */}
-        <Stars radius={45} depth={30} count={1200} factor={3} saturation={0.5} fade speed={1.2} />
+        {/* Cosmic Twinkling Stars */}
+        <Stars radius={50} depth={35} count={1600} factor={3.5} saturation={0.6} fade speed={1.5} />
 
-        {/* 3D Solar System Scene */}
-        <SolarSystemScene
+        {/* Dynamic 3D Solar System Scene */}
+        <SolarSystemCosmos
+          speedMultiplier={speedMultiplier}
           isPaused={isPaused}
           activePlanetId={activePlanet?.id}
           onSelectPlanet={(planet) => setActivePlanet(planet)}
         />
 
-        {/* Interactive Mouse & Touch 3D Orbit Controls */}
+        {/* Interactive 3D Orbit Controls */}
         <OrbitControls
           enableZoom={true}
-          maxDistance={14}
-          minDistance={3.5}
+          maxDistance={15}
+          minDistance={3.2}
           enablePan={false}
-          rotateSpeed={0.6}
-          zoomSpeed={0.7}
+          rotateSpeed={0.65}
+          zoomSpeed={0.75}
           maxPolarAngle={Math.PI / 2.05}
         />
       </Canvas>
 
-      {/* Top Overlay Badge & Interactive Controls */}
+      {/* Top Floating Control Bar */}
       {showControls && (
         <div
           style={{
             position: 'absolute',
-            top: '1rem',
-            left: '1rem',
-            right: '1rem',
+            top: '0.85rem',
+            left: '0.85rem',
+            right: '0.85rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -451,11 +647,11 @@ export default function TechSolarSystem3D({ height = '460px', showControls = tru
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              padding: '0.45rem 0.9rem',
+              padding: '0.4rem 0.85rem',
               borderRadius: '12px',
-              background: 'rgba(15, 23, 42, 0.85)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(56, 189, 248, 0.3)',
+              background: 'rgba(15, 23, 42, 0.88)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(56, 189, 248, 0.35)',
               boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)'
             }}
           >
@@ -477,20 +673,46 @@ export default function TechSolarSystem3D({ height = '460px', showControls = tru
                 fontFamily: 'var(--font-tech)'
               }}
             >
-              3D Tech Solar System
+              🪐 3D Tech Solar System
             </span>
           </div>
 
-          {/* Interactive Action Pill */}
+          {/* Interactive Warp & Orbit Controls */}
           <div style={{ pointerEvents: 'auto', display: 'flex', gap: '6px' }}>
+            {/* Speed Boost Button */}
+            <button
+              onClick={cycleSpeed}
+              title="Change Orbit Speed"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                padding: '0.35rem 0.65rem',
+                borderRadius: '10px',
+                background: speedMultiplier > 1 ? 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)' : 'rgba(15, 23, 42, 0.85)',
+                border: '1px solid rgba(56, 189, 248, 0.35)',
+                color: '#ffffff',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                fontFamily: 'var(--font-tech)',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                backdropFilter: 'blur(8px)'
+              }}
+            >
+              <FastForward size={12} />
+              <span>{speedMultiplier}x Speed</span>
+            </button>
+
+            {/* Pause/Play Button */}
             <button
               onClick={() => setIsPaused(!isPaused)}
               title={isPaused ? 'Resume Orbit' : 'Pause Orbit'}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '5px',
-                padding: '0.4rem 0.75rem',
+                gap: '4px',
+                padding: '0.35rem 0.65rem',
                 borderRadius: '10px',
                 background: isPaused ? 'rgba(239, 68, 68, 0.25)' : 'rgba(2, 132, 199, 0.25)',
                 border: '1px solid rgba(56, 189, 248, 0.35)',
@@ -510,7 +732,7 @@ export default function TechSolarSystem3D({ height = '460px', showControls = tru
         </div>
       )}
 
-      {/* Selected Planet Info Card Overlay (Click to view details) */}
+      {/* Selected Planet Detail Card Overlay */}
       {activePlanet && (
         <div
           style={{
@@ -518,14 +740,14 @@ export default function TechSolarSystem3D({ height = '460px', showControls = tru
             bottom: '1rem',
             left: '1rem',
             right: '1rem',
-            maxWidth: '380px',
+            maxWidth: '390px',
             margin: '0 auto',
-            background: 'rgba(15, 23, 42, 0.92)',
+            background: 'rgba(15, 23, 42, 0.94)',
             backdropFilter: 'blur(16px)',
             border: `1.5px solid ${activePlanet.color}`,
             borderRadius: '16px',
             padding: '0.85rem 1.1rem',
-            boxShadow: `0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px ${activePlanet.color}44`,
+            boxShadow: `0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px ${activePlanet.color}44`,
             zIndex: 10,
             animation: 'slideUpPlanet 0.25s ease-out'
           }}
@@ -578,13 +800,36 @@ export default function TechSolarSystem3D({ height = '460px', showControls = tru
             </div>
           </div>
 
-          <p style={{ margin: 0, fontSize: '0.78rem', color: '#cbd5e1', lineHeight: 1.45 }}>
+          <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.78rem', color: '#cbd5e1', lineHeight: 1.45 }}>
             {activePlanet.desc}
           </p>
+
+          {/* Moons / Ecosystem Sub-modules */}
+          {activePlanet.moons && activePlanet.moons.length > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '0.4rem' }}>
+              <span style={{ fontSize: '0.68rem', color: '#94a3b8' }}>Orbiting Satellites:</span>
+              {activePlanet.moons.map((m, idx) => (
+                <span
+                  key={idx}
+                  style={{
+                    fontSize: '0.68rem',
+                    padding: '1px 6px',
+                    borderRadius: '5px',
+                    background: `${m.color}22`,
+                    border: `1px solid ${m.color}55`,
+                    color: '#ffffff',
+                    fontWeight: 600
+                  }}
+                >
+                  🛰️ {m.name}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
-      {/* Bottom helper drag tooltip */}
+      {/* Helper drag tooltip */}
       <div
         style={{
           position: 'absolute',
@@ -593,7 +838,7 @@ export default function TechSolarSystem3D({ height = '460px', showControls = tru
           transform: 'translateX(-50%)',
           pointerEvents: 'none',
           fontSize: '0.68rem',
-          color: 'rgba(255, 255, 255, 0.5)',
+          color: 'rgba(255, 255, 255, 0.55)',
           fontFamily: 'var(--font-tech)',
           letterSpacing: '0.04em',
           display: activePlanet ? 'none' : 'flex',
@@ -601,7 +846,7 @@ export default function TechSolarSystem3D({ height = '460px', showControls = tru
           gap: '6px'
         }}
       >
-        <span>🖱️ Drag to rotate 360° &bull; Scroll to zoom &bull; Click planet for info</span>
+        <span>🖱️ Putar 360° &bull; Scroll zoom in/out &bull; Klik planet &amp; satelit untuk detail</span>
       </div>
 
       <style>{`
