@@ -3,6 +3,7 @@ export const portfolioData = {
   id: {
     nav: {
       about: "Tentang",
+      skills: "Keahlian",
       projects: "Proyek",
       experience: "Pengalaman",
       contact: "Kontak",
@@ -83,32 +84,137 @@ export const portfolioData = {
     },
 
     skills: {
-      sectionTag: "// Kemampuan Teknis & Pemrograman",
-      sectionTitle: "Arsenal Bahasa &",
-      sectionGradient: "Teknologi Modern",
-      sectionDesc: "Penguasaan komprehensif bahasa pemrograman dari arsitektur backend skala enterprise, ekosistem ERP SAP, hingga frontend performa tinggi.",
-      orbitTitle: "Interactive Code & Tech Playground",
-      orbitRotate: "Unit Test Runner",
-      orbitDesc: "Eksplorasi cuplikan kode produksi, unit test terverifikasi, dan arsitektur backend/frontend yang saya bangun.",
+      sectionTag: "// Kemampuan Teknis & Penguasaan Alat",
+      sectionTitle: "Technical Skills &",
+      sectionGradient: "Kompetensi Utama",
+      sectionDesc: "Kompilasi keahlian teknis dari rekayasa backend, antarmuka modern responsif, optimasi basis data relasional, hingga administrasi sistem & kepemimpinan tim.",
       categories: [
-        { id: "all", label: "Semua Tech" },
-        { id: "backend", label: "Backend & ERP" },
+        { id: "all", label: "Semua Skill" },
         { id: "frontend", label: "Frontend & UI" },
-        { id: "tools", label: "Database & Tools" }
+        { id: "backend", label: "Backend & API" },
+        { id: "database", label: "Database & System" },
+        { id: "architecture", label: "Arsitektur" },
+        { id: "softskills", label: "Leadership & Soft" }
       ],
       items: [
-        { name: "Laravel (PHP)", level: 96, category: "backend", icon: "Server", highlight: true },
-        { name: "SAP ABAP & S/4HANA", level: 92, category: "backend", icon: "Cpu", highlight: true },
-        { name: "PHP", level: 95, category: "backend", icon: "FileCode", highlight: true },
-        { name: "Filament & Livewire", level: 93, category: "backend", icon: "Layers", highlight: true },
-        { name: "WRICEF Objects", level: 90, category: "backend", icon: "Boxes", highlight: true },
-        { name: "React.js / Next.js", level: 92, category: "frontend", icon: "Code2", highlight: true },
-        { name: "Vue.js", level: 90, category: "frontend", icon: "Sparkles", highlight: false },
-        { name: "JavaScript / ES6+", level: 94, category: "frontend", icon: "FileCode", highlight: false },
-        { name: "Tailwind CSS & Bootstrap", level: 95, category: "frontend", icon: "Palette", highlight: true },
-        { name: "MySQL & MariaDB", level: 92, category: "tools", icon: "Database", highlight: false },
-        { name: "Git / GitHub", level: 92, category: "tools", icon: "Gauge", highlight: false },
-        { name: "SAP Signavio & SAC", level: 88, category: "backend", icon: "Terminal", highlight: false }
+        { name: "PHP", category: "backend", icon: "PHP", badge: "Core Backend" },
+        { name: "Node.js", category: "backend", icon: "Node.js", badge: "Runtime Engine" },
+        { name: "JavaScript", category: "frontend", icon: "JavaScript", badge: "ES6+ / Web" },
+        { name: "VueJS", category: "frontend", icon: "VueJS", badge: "Reactive UI" },
+        { name: "Svelte", category: "frontend", icon: "Svelte", badge: "Compiler UI" },
+        { name: "API", category: "backend", icon: "API", badge: "REST & Webhook" },
+        { name: "JQuery", category: "frontend", icon: "JQuery", badge: "DOM Library" },
+        { name: "Bootstrap", category: "frontend", icon: "Bootstrap", badge: "CSS Framework" },
+        { name: "MySql", category: "database", icon: "MySql", badge: "Relational DB" },
+        { name: "MariaDb", category: "database", icon: "MariaDb", badge: "High-Perf SQL" },
+        { name: "Git", category: "database", icon: "Git", badge: "Version Control" },
+        { name: "GitHub", category: "database", icon: "GitHub", badge: "CI/CD & Repo" },
+        { name: "Remote Desktop Protocol (RDP)", category: "database", icon: "Remote Desktop Protocol (RDP)", badge: "Remote Admin" },
+        { name: "Mikrotik", category: "database", icon: "Mikrotik", badge: "Networking / Router" },
+        { name: "Linux", category: "database", icon: "Linux", badge: "Server OS / CLI" },
+        { name: "Wordpress", category: "architecture", icon: "Wordpress", badge: "CMS Engine" },
+        { name: "CMS (Content Management System )", category: "architecture", icon: "CMS (Content Management System )", badge: "Publishing Platform" },
+        { name: "MVC (Model View Controller)", category: "architecture", icon: "MVC (Model View Controller)", badge: "Design Pattern" },
+        { name: "Responsive Web Design", category: "frontend", icon: "Responsive Web Design", badge: "Mobile-First UX" },
+        { name: "Dashboard", category: "frontend", icon: "Dashboard", badge: "Analytics & UI" },
+        { name: "Publik Speaking", category: "softskills", icon: "Publik Speaking", badge: "Communication" },
+        { name: "Leadership", category: "softskills", icon: "Leadership", badge: "Squad & Team" },
+        { name: "Troubleshooting", category: "softskills", icon: "Troubleshooting", badge: "Root Cause Analysis" },
+        { name: "Problem Solving", category: "softskills", icon: "Problem Solving", badge: "Analytical & Logic" },
+        { name: "Laravel", category: "backend", icon: "Laravel", badge: "PHP Framework" },
+        { name: "React.js / Next.js", category: "frontend", icon: "React", badge: "Modern Web" },
+        { name: "SAP ABAP", category: "backend", icon: "SAP ABAP", badge: "S/4HANA & WRICEF" },
+        { name: "Tailwind CSS", category: "frontend", icon: "Tailwind CSS", badge: "Utility-First" }
+      ]
+    },
+
+    aiTools: {
+      sectionTag: "// Workflow AI & Produktivitas",
+      sectionTitle: "AI Tools I Use",
+      sectionGradient: "Supercharge Workflow",
+      sectionDesc: "Tools that supercharge my workflow with AI assistance — mempercepat riset, rekayasa arsitektur sistem, automasi coding, dan penyelesaian masalah teknis tingkat tinggi.",
+      items: [
+        {
+          name: "ChatGPT",
+          tagline: "ChatGPT",
+          vendor: "OpenAI",
+          desc: "Generative reasoning, architecture design & prompt workflows",
+          icon: "ChatGPT",
+          gradient: "linear-gradient(135deg, rgba(16,163,127,0.18) 0%, rgba(2,132,199,0.15) 100%)",
+          color: "#10A37F"
+        },
+        {
+          name: "Claude",
+          tagline: "Claude",
+          vendor: "Anthropic",
+          desc: "Deep reasoning, long-context code refactoring & analysis",
+          icon: "Claude",
+          gradient: "linear-gradient(135deg, rgba(217,119,6,0.18) 0%, rgba(245,158,11,0.15) 100%)",
+          color: "#D97706"
+        },
+        {
+          name: "Gemini",
+          tagline: "Gemini",
+          vendor: "Google",
+          desc: "Multimodal intelligence, research & rapid prototyping",
+          icon: "Gemini",
+          gradient: "linear-gradient(135deg, rgba(56,189,248,0.18) 0%, rgba(168,85,247,0.18) 100%)",
+          color: "#818CF8"
+        },
+        {
+          name: "Claude Code",
+          tagline: "Claude Code",
+          vendor: "Anthropic CLI",
+          desc: "Agentic CLI coding & automated terminal workflows",
+          icon: "Claude Code",
+          gradient: "linear-gradient(135deg, rgba(245,158,11,0.18) 0%, rgba(234,88,12,0.15) 100%)",
+          color: "#F59E0B"
+        },
+        {
+          name: "OpenCode",
+          tagline: "OpenCode",
+          vendor: "AI Coding",
+          desc: "Autonomous open code generation & script optimization",
+          icon: "OpenCode",
+          gradient: "linear-gradient(135deg, rgba(2,132,199,0.18) 0%, rgba(59,130,246,0.15) 100%)",
+          color: "#0284C7"
+        },
+        {
+          name: "Antigravity",
+          tagline: "Antigravity",
+          vendor: "Google DeepMind",
+          desc: "Advanced agentic coding & deep AI pair programming",
+          icon: "Antigravity",
+          gradient: "linear-gradient(135deg, rgba(168,85,247,0.18) 0%, rgba(56,189,248,0.18) 100%)",
+          color: "#A855F7"
+        },
+        {
+          name: "Cursor",
+          tagline: "Cursor",
+          vendor: "AI Code Editor",
+          desc: "Next-gen AI code editor with codebase-wide indexing",
+          icon: "Cursor",
+          gradient: "linear-gradient(135deg, rgba(148,163,184,0.18) 0%, rgba(56,189,248,0.18) 100%)",
+          color: "#38BDF8"
+        },
+        {
+          name: "9router",
+          tagline: "9router",
+          vendor: "AI Router",
+          desc: "Intelligent multi-model LLM routing & API gateway",
+          icon: "9router",
+          gradient: "linear-gradient(135deg, rgba(79,70,229,0.18) 0%, rgba(16,185,129,0.15) 100%)",
+          color: "#4F46E5"
+        },
+        {
+          name: "NotebookLM",
+          tagline: "NotebookLM",
+          vendor: "Google / Research",
+          desc: "Source-grounded synthesis & technical research",
+          icon: "NotebookLM",
+          gradient: "linear-gradient(135deg, rgba(66,133,244,0.18) 0%, rgba(52,168,83,0.15) 100%)",
+          color: "#4285F4"
+        }
       ]
     },
 
@@ -461,6 +567,7 @@ export const portfolioData = {
       navItems: [
         { label: "Beranda", href: "#hero" },
         { label: "Tentang", href: "#about" },
+        { label: "Keahlian & AI Tools", href: "#skills" },
         { label: "Koleksi Proyek", href: "#projects" },
         { label: "Pengalaman", href: "#experience" },
         { label: "Kontak", href: "#contact" }
@@ -476,6 +583,7 @@ export const portfolioData = {
   en: {
     nav: {
       about: "About",
+      skills: "Skills",
       projects: "Projects",
       experience: "Experience",
       contact: "Contact",
@@ -556,32 +664,137 @@ export const portfolioData = {
     },
 
     skills: {
-      sectionTag: "// Technical & Programming Stack",
-      sectionTitle: "Technology Arsenal &",
-      sectionGradient: "Modern Code Engineering",
-      sectionDesc: "Comprehensive command of programming languages spanning enterprise backend architectures, SAP ERP customization, to high-performance frontend interfaces.",
-      orbitTitle: "Interactive Code & Tech Playground",
-      orbitRotate: "Unit Test Runner",
-      orbitDesc: "Explore verified production code patterns, automated test suites, and clean system architectures.",
+      sectionTag: "// Technical & Tooling Arsenal",
+      sectionTitle: "Technical Skills &",
+      sectionGradient: "Core Competencies",
+      sectionDesc: "A robust technical repertoire spanning enterprise backend systems, responsive web architectures, relational database tuning, to systems infrastructure and technical leadership.",
       categories: [
-        { id: "all", label: "All Tech" },
-        { id: "backend", label: "Backend & ERP" },
+        { id: "all", label: "All Skills" },
         { id: "frontend", label: "Frontend & UI" },
-        { id: "tools", label: "Database & Tools" }
+        { id: "backend", label: "Backend & API" },
+        { id: "database", label: "Database & System" },
+        { id: "architecture", label: "Architecture" },
+        { id: "softskills", label: "Leadership & Soft" }
       ],
       items: [
-        { name: "Laravel (PHP)", level: 96, category: "backend", icon: "Server", highlight: true },
-        { name: "SAP ABAP & S/4HANA", level: 92, category: "backend", icon: "Cpu", highlight: true },
-        { name: "PHP", level: 95, category: "backend", icon: "FileCode", highlight: true },
-        { name: "Filament & Livewire", level: 93, category: "backend", icon: "Layers", highlight: true },
-        { name: "WRICEF Objects", level: 90, category: "backend", icon: "Boxes", highlight: true },
-        { name: "React.js / Next.js", level: 92, category: "frontend", icon: "Code2", highlight: true },
-        { name: "Vue.js", level: 90, category: "frontend", icon: "Sparkles", highlight: false },
-        { name: "JavaScript / ES6+", level: 94, category: "frontend", icon: "FileCode", highlight: false },
-        { name: "Tailwind CSS & Bootstrap", level: 95, category: "frontend", icon: "Palette", highlight: true },
-        { name: "MySQL & MariaDB", level: 92, category: "tools", icon: "Database", highlight: false },
-        { name: "Git / GitHub", level: 92, category: "tools", icon: "Gauge", highlight: false },
-        { name: "SAP Signavio & SAC", level: 88, category: "backend", icon: "Terminal", highlight: false }
+        { name: "PHP", category: "backend", icon: "PHP", badge: "Core Backend" },
+        { name: "Node.js", category: "backend", icon: "Node.js", badge: "Runtime Engine" },
+        { name: "JavaScript", category: "frontend", icon: "JavaScript", badge: "ES6+ / Web" },
+        { name: "VueJS", category: "frontend", icon: "VueJS", badge: "Reactive UI" },
+        { name: "Svelte", category: "frontend", icon: "Svelte", badge: "Compiler UI" },
+        { name: "API", category: "backend", icon: "API", badge: "REST & Webhook" },
+        { name: "JQuery", category: "frontend", icon: "JQuery", badge: "DOM Library" },
+        { name: "Bootstrap", category: "frontend", icon: "Bootstrap", badge: "CSS Framework" },
+        { name: "MySql", category: "database", icon: "MySql", badge: "Relational DB" },
+        { name: "MariaDb", category: "database", icon: "MariaDb", badge: "High-Perf SQL" },
+        { name: "Git", category: "database", icon: "Git", badge: "Version Control" },
+        { name: "GitHub", category: "database", icon: "GitHub", badge: "CI/CD & Repo" },
+        { name: "Remote Desktop Protocol (RDP)", category: "database", icon: "Remote Desktop Protocol (RDP)", badge: "Remote Admin" },
+        { name: "Mikrotik", category: "database", icon: "Mikrotik", badge: "Networking / Router" },
+        { name: "Linux", category: "database", icon: "Linux", badge: "Server OS / CLI" },
+        { name: "Wordpress", category: "architecture", icon: "Wordpress", badge: "CMS Engine" },
+        { name: "CMS (Content Management System )", category: "architecture", icon: "CMS (Content Management System )", badge: "Publishing Platform" },
+        { name: "MVC (Model View Controller)", category: "architecture", icon: "MVC (Model View Controller)", badge: "Design Pattern" },
+        { name: "Responsive Web Design", category: "frontend", icon: "Responsive Web Design", badge: "Mobile-First UX" },
+        { name: "Dashboard", category: "frontend", icon: "Dashboard", badge: "Analytics & UI" },
+        { name: "Publik Speaking", category: "softskills", icon: "Publik Speaking", badge: "Communication" },
+        { name: "Leadership", category: "softskills", icon: "Leadership", badge: "Squad & Team" },
+        { name: "Troubleshooting", category: "softskills", icon: "Troubleshooting", badge: "Root Cause Analysis" },
+        { name: "Problem Solving", category: "softskills", icon: "Problem Solving", badge: "Analytical & Logic" },
+        { name: "Laravel", category: "backend", icon: "Laravel", badge: "PHP Framework" },
+        { name: "React.js / Next.js", category: "frontend", icon: "React", badge: "Modern Web" },
+        { name: "SAP ABAP", category: "backend", icon: "SAP ABAP", badge: "S/4HANA & WRICEF" },
+        { name: "Tailwind CSS", category: "frontend", icon: "Tailwind CSS", badge: "Utility-First" }
+      ]
+    },
+
+    aiTools: {
+      sectionTag: "// AI Workflow & Supercharging",
+      sectionTitle: "AI Tools I Use",
+      sectionGradient: "Supercharge Workflow",
+      sectionDesc: "Tools that supercharge my workflow with AI assistance — accelerating technical research, enterprise software architecture, automated coding, and mission-critical troubleshooting.",
+      items: [
+        {
+          name: "ChatGPT",
+          tagline: "ChatGPT",
+          vendor: "OpenAI",
+          desc: "Generative reasoning, architecture design & prompt workflows",
+          icon: "ChatGPT",
+          gradient: "linear-gradient(135deg, rgba(16,163,127,0.18) 0%, rgba(2,132,199,0.15) 100%)",
+          color: "#10A37F"
+        },
+        {
+          name: "Claude",
+          tagline: "Claude",
+          vendor: "Anthropic",
+          desc: "Deep reasoning, long-context code refactoring & analysis",
+          icon: "Claude",
+          gradient: "linear-gradient(135deg, rgba(217,119,6,0.18) 0%, rgba(245,158,11,0.15) 100%)",
+          color: "#D97706"
+        },
+        {
+          name: "Gemini",
+          tagline: "Gemini",
+          vendor: "Google",
+          desc: "Multimodal intelligence, research & rapid prototyping",
+          icon: "Gemini",
+          gradient: "linear-gradient(135deg, rgba(56,189,248,0.18) 0%, rgba(168,85,247,0.18) 100%)",
+          color: "#818CF8"
+        },
+        {
+          name: "Claude Code",
+          tagline: "Claude Code",
+          vendor: "Anthropic CLI",
+          desc: "Agentic CLI coding & automated terminal workflows",
+          icon: "Claude Code",
+          gradient: "linear-gradient(135deg, rgba(245,158,11,0.18) 0%, rgba(234,88,12,0.15) 100%)",
+          color: "#F59E0B"
+        },
+        {
+          name: "OpenCode",
+          tagline: "OpenCode",
+          vendor: "AI Coding",
+          desc: "Autonomous open code generation & script optimization",
+          icon: "OpenCode",
+          gradient: "linear-gradient(135deg, rgba(2,132,199,0.18) 0%, rgba(59,130,246,0.15) 100%)",
+          color: "#0284C7"
+        },
+        {
+          name: "Antigravity",
+          tagline: "Antigravity",
+          vendor: "Google DeepMind",
+          desc: "Advanced agentic coding & deep AI pair programming",
+          icon: "Antigravity",
+          gradient: "linear-gradient(135deg, rgba(168,85,247,0.18) 0%, rgba(56,189,248,0.18) 100%)",
+          color: "#A855F7"
+        },
+        {
+          name: "Cursor",
+          tagline: "Cursor",
+          vendor: "AI Code Editor",
+          desc: "Next-gen AI code editor with codebase-wide indexing",
+          icon: "Cursor",
+          gradient: "linear-gradient(135deg, rgba(148,163,184,0.18) 0%, rgba(56,189,248,0.18) 100%)",
+          color: "#38BDF8"
+        },
+        {
+          name: "9router",
+          tagline: "9router",
+          vendor: "AI Router",
+          desc: "Intelligent multi-model LLM routing & API gateway",
+          icon: "9router",
+          gradient: "linear-gradient(135deg, rgba(79,70,229,0.18) 0%, rgba(16,185,129,0.15) 100%)",
+          color: "#4F46E5"
+        },
+        {
+          name: "NotebookLM",
+          tagline: "NotebookLM",
+          vendor: "Google / Research",
+          desc: "Source-grounded synthesis & technical research",
+          icon: "NotebookLM",
+          gradient: "linear-gradient(135deg, rgba(66,133,244,0.18) 0%, rgba(52,168,83,0.15) 100%)",
+          color: "#4285F4"
+        }
       ]
     },
 
@@ -934,6 +1147,7 @@ export const portfolioData = {
       navItems: [
         { label: "Home", href: "#hero" },
         { label: "About", href: "#about" },
+        { label: "Skills & AI Tools", href: "#skills" },
         { label: "Projects", href: "#projects" },
         { label: "Experience", href: "#experience" },
         { label: "Contact", href: "#contact" }
